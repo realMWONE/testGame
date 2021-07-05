@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private Rigidbody rigidBodyComponent;
+    private int numberJumped;
+
     // Start is called before the first frame update
     void Start()
     {
+        rigidBodyComponent = GetComponent<Rigidbody>();
+        numberJumped = 0;
     }
 
     // Update is called once per frame
@@ -14,15 +19,22 @@ public class Player : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)){
             //Debug.Log("Space hold down");
-            GetComponent<Rigidbody>().AddForce(Vector3.up*5, ForceMode.VelocityChange);
+            if (numberJumped < 2)
+            {
+                rigidBodyComponent.AddForce(Vector3.up * 5, ForceMode.VelocityChange);
+                numberJumped++;
+            }
         }
 
+        /**TODO: Reset numberJumped to 0 when object touches ground**/
+
+
         if (Input.GetKey(KeyCode.A)) {
-            GetComponent<Rigidbody>().AddForce(Vector3.left/2, ForceMode.VelocityChange);
+            rigidBodyComponent.AddForce(Vector3.left/2, ForceMode.VelocityChange);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            GetComponent<Rigidbody>().AddForce(Vector3.right/2, ForceMode.VelocityChange);
+            rigidBodyComponent.AddForce(Vector3.right/2, ForceMode.VelocityChange);
         }
     }
 }
